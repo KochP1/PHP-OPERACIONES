@@ -1,6 +1,25 @@
 <?php
 include 'conn.php';
 session_start();
+
+
+function randomNums() {
+  return [
+      [rand(1, 10), rand(1, 10)]
+  ];
+}
+
+
+if (!isset($_SESSION['sumas'])) {
+  $_SESSION['sumas'] = [];
+  for ($i = 0; $i < 8; $i++) {
+      $_SESSION['sumas'][] = [
+          'matriz1' => randomNums(),
+          'matriz2' => randomNums(),
+          'resuelta' => false 
+      ];
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +49,7 @@ session_start();
                         <a class="nav-link" href="#">Historial</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Cerrar sesión</a>
+                        <a class="nav-link" href="closeSession.php">Cerrar sesión</a>
                       </li>
 
                       <li class="nav-item">
