@@ -1,3 +1,7 @@
+<?php
+include 'conn.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +24,9 @@
                 <input type="password" id="password" name="password">
             </div>
 
-            <button type="submit" class="btn btn-primary login-btn">Inciar sesión</button>
-            <a href="regist.html">¿No tienes una cuenta?</a>
+            <button type="submit" class="btn btn-primary login-btn" name="iniciar">Inciar sesión</button>
+            <a href="regist.php">¿No tienes una cuenta?</a>
         </form>
-
-        <a href="dashboard.html">ops</a>
     </div>
 
     <script src="static/js/bootstrap.bundle.min.js"></script>
