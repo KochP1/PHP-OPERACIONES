@@ -32,6 +32,10 @@ session_start();
                       <li class="nav-item">
                         <a class="nav-link" href="#">Cerrar sesión</a>
                       </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link">Hello, <?php echo $_SESSION['username'] ?></a>
+                      </li>
                     </ul>
                   </div>
                 </div>

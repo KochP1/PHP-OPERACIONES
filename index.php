@@ -35,6 +35,7 @@ include 'conn.php';
 
 <?php
 if (isset($_POST['iniciar'])) {
+    session_start();
     $username = mysqli_real_escape_string($enlace, $_POST['username']);
     $password = mysqli_real_escape_string($enlace, $_POST['password']);
 
@@ -48,6 +49,9 @@ if (isset($_POST['iniciar'])) {
             $usuario = mysqli_fetch_assoc($sql);
             if (password_verify($password, $usuario['contraseña'])) {
                 header('Location: dashboard.php');
+                $_SESSION['nombre'] = $usuario['nombre'];
+                $_SESSION['apellido'] = $usuario['apellido'];
+                $_SESSION['username'] = $usuario['username'];
                 exit();
             } else {
                 echo '<div class="alert alert-danger regist-exception">Usuario o contraseña inválidos</div>';
