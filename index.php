@@ -32,3 +32,27 @@ include 'conn.php';
     <script src="static/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php
+if (isset($_POST['iniciar'])) {
+    $username = mysqli_real_escape_string($enlace, $_POST['username']);
+    $password = mysqli_real_escape_string($enlace, $_POST['password']);
+
+    if ($username === "" or $password === "") {
+        echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios</div>';
+    } else if (strlen($username) > 12 or strlen($password) > 12) {
+        echo '<div class="alert alert-danger regist-exception">Usuario o contraseña(max 12 caracteres) muy largo</div>';
+    }else {
+        $sql = mysqli_query($enlace, "SELECT * FROM usuarios WHERE username = '$username'");
+        if ($sql && mysqli_num_rows($sql) > 0) {
+            $usuario = mysqli_fetch_assoc($sql);
+            if (password_verify($password, $usuario['contraseña'])) {
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                echo '<div class="alert alert-danger regist-exception">Usuario o contraseña inválidos</div>';
+            }
+        }   
+    }
+}
+?>

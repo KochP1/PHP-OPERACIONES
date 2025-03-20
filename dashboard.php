@@ -1,3 +1,8 @@
+<?php
+include 'conn.php';
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +30,7 @@
                         <a class="nav-link" href="#">Historial</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="#">Cerrar sesión</a>
                       </li>
                     </ul>
                   </div>

@@ -61,3 +61,10 @@ body{
 .regist-form-wrapper{
     margin-top: 10%;
 }
+
+.regist-exception{
+    display: flex !important;
+    margin: auto !important;
+    width: 300px !important;
+    margin-top: 2% !important;
+}

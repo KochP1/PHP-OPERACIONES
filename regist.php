@@ -50,13 +50,14 @@ if (isset($_POST['registro'])) {
     $apellido = mysqli_real_escape_string($enlace, $_POST['lastname']);
     $username = mysqli_real_escape_string($enlace, $_POST['username']);
     $password = mysqli_real_escape_string($enlace, $_POST['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     if ($nombre === "" or $apellido === "" or $username === "" or $password === "") {
-        echo "Todos los datos son obligatorios";
+        echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios</div>';
     } else if (strlen($nombre) > 15 or strlen($apellido) > 20 or strlen($username) > 12 or strlen($password) > 12) {
-        echo "Nombre(max 15 caracteres) o apellido(max 20 caracteres) muy largo";
+        echo "Nombre(max 15 caracteres), apellido(max 20 caracteres) o usuario y contraeña(max 12 caracteres) muy largo";
     }else {
-        $insertDatos = "INSERT INTO usuarios (nombre, apellido, username, contraseña) VALUES ('$nombre', '$apellido', '$username', '$password')";
+        $insertDatos = "INSERT INTO usuarios (nombre, apellido, username, contraseña) VALUES ('$nombre', '$apellido', '$username', '$hashed_password')";
         $ejecutarInsert = mysqli_query($enlace, $insertDatos);
 
         if ($ejecutarInsert) {
