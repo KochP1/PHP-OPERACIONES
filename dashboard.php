@@ -5,7 +5,7 @@ session_start();
 
 function randomNums() {
   return [
-      [rand(1, 10), rand(1, 10)]
+      [rand(1, 9), rand(1, 9)]
   ];
 }
 
@@ -60,6 +60,35 @@ if (!isset($_SESSION['sumas'])) {
                 </div>
               </nav>
         </header>
+    </section>
+
+    <section class="sumas-section">
+      <div class="grid__container">
+
+      <?php foreach ($_SESSION['sumas'] as $index => $suma): ?>
+        <?php if (!$suma['resuelta']): ?>
+        <div class="suma_container">
+
+        <?php foreach ($suma['matriz1'] as $fila): ?>
+          <div class="digitos__container">
+          <?php foreach ($fila as $valor): ?>
+            <span class="digito"><?php echo $valor; ?></span>
+          <?php endforeach; ?>
+          </div>
+          <?php endforeach; ?>
+
+          <?php foreach ($suma['matriz2'] as $fila): ?>
+          <div class="digitos__container utl_digitos">
+            <?php foreach ($fila as $valor): ?>
+            <span class="digito digito_3">6</span>
+            <?php endforeach; ?>
+          </div>
+          <?php endforeach; ?>
+
+        </div>
+        <?php endif; ?>
+      <?php endforeach; ?>
+      </div>
     </section>
 
     <script src="static/js/bootstrap.bundle.min.js"></script>
