@@ -107,3 +107,9 @@ body{
 .utl_digitos{
     border-top: 5px solid #333;
 }
+
+.message{
+    display: flex !important;
+    margin: auto !important;
+    margin-top: 20px !important;
+}
