@@ -8,6 +8,7 @@ function randomNums() {
     ];
 }
 
+// Inicializar las sumas aleatorias si no existen
 if (!isset($_SESSION['sumas'])) {
     $_SESSION['sumas'] = [];
     for ($i = 0; $i < 8; $i++) {
@@ -19,6 +20,12 @@ if (!isset($_SESSION['sumas'])) {
     }
 }
 
+// Inicializar el historial de sumas resueltas si no existe
+if (!isset($_SESSION['sumas_resueltas'])) {
+    $_SESSION['sumas_resueltas'] = [];
+}
+
+// Procesar la respuesta del usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $indice = $_POST['indice'];
     $respuestaUsuario = $_POST['respuesta'];
@@ -29,15 +36,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $digito_2 = (int) ($suma['matriz2'][0][0] . $suma['matriz2'][0][1]);
         
         $respuestaCorrecta = $digito_1 + $digito_2;
-        echo $respuestaCorrecta;
 
         if ($respuestaUsuario == $respuestaCorrecta) {
-            $_SESSION['sumas'][$indice]['resuelta'] = true;
+            $_SESSION['sumas_resueltas'][] = [
+                'matriz1' => $suma['matriz1'],
+                'matriz2' => $suma['matriz2'],
+                'respuesta' => $respuestaCorrecta
+            ];
+
             $_SESSION['sumas'][$indice] = [
                 'matriz1' => randomNums(),
                 'matriz2' => randomNums(),
                 'resuelta' => false
             ];
+
             $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta! Se ha generado una nueva suma.'];
         } else {
             $_SESSION['mensaje'] = ['tipo' => 'alert-danger', 'texto' => 'Respuesta incorrecta. Inténtalo de nuevo.'];
@@ -70,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a class="nav-link active" aria-current="page" href="dashboard.php"">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Historial</a>
+                        <a class="nav-link" href="historial.php">Historial</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="closeSession.php">Cerrar sesión</a>
@@ -93,11 +105,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <section class="sumas-section">
+        <div class="title__container">
+            <h1>Sumas propuestas</h1>
+        </div>
         <div class="grid__container">
             <?php foreach ($_SESSION['sumas'] as $index => $suma): ?>
                 <?php if (!$suma['resuelta']): ?>
                     <form action="" method="post" class="suma-form">
                         <input type="hidden" name="indice" value="<?php echo $index; ?>">
+                        <div class="flex-suma__container">
                         <div class="suma_container">
                             <!-- Mostrar la primera matriz -->
                             <?php foreach ($suma['matriz1'] as $fila): ?>
@@ -122,6 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="number" name="respuesta" required>
                                 <input type="submit" value="Enviar">
                             </div>
+                        </div>
+
+                        <span class="simbolo">+</span>
                         </div>
                     </form>
                 <?php endif; ?>

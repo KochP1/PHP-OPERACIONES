@@ -4,8 +4,7 @@ session_start();
 
 unset($_SESSION['sumas']);
 
-//session_destroy();
-session_write_close();
+session_destroy();
 
 header('Location: index.php');
 exit();
