@@ -72,6 +72,20 @@ body{
 
 /* DASHBOARD */
 
+header{
+    box-shadow: 0px 2px 5px #333;
+}
+
+nav{
+    background-color: #f0eae0 !important;
+}
+
+.fa-plus{
+    font-size: 2rem;
+    font-weight: 500;
+    color: #dc3545;
+}
+
 .title__container{
     width: 100%;
     display: flex;

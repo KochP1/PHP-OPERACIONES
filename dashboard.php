@@ -65,21 +65,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/styles.css">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Operaciones</title>
 </head>
 <body>
     <section class="header__section">
         <header class="header">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="dashboard.php">Navbar</a>
+                  <a class="navbar-brand" href="dashboard.php">
+                    <i class="fa-solid fa-plus"></i>
+                  </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard.php"">Home</a>
+                        <a class="nav-link active" aria-current="page" href="dashboard.php"">Inicio</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="historial.php">Historial</a>
@@ -88,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a class="nav-link" href="closeSession.php">Cerrar sesión</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link">Hello, <?php echo $_SESSION['username']; ?></a>
+                        <a class="nav-link">¡Hola, <?php echo $_SESSION['username']; ?>!</a>
                       </li>
                     </ul>
                   </div>
