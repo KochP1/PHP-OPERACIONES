@@ -22,7 +22,7 @@ if (!isset($_SESSION['username'])) {
 <body>
     <section class="header__section">
         <header class="header">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                   <a class="navbar-brand" href="dashboard.php">
                     <i class="fa-solid fa-plus"></i>
