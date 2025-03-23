@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="grid__container" id="grid-container">
             <?php foreach ($_SESSION['sumas'] as $index => $suma): ?>
-                    <form action="" method="post" class="suma-form">
+                    <form action="" method="post" class="suma-form" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))">
                         <input type="hidden" name="indice" value="<?php echo $index; ?>">
                         <div class="flex-suma__container" id="<?php echo $index; ?>">
                         <div class="suma_container">
@@ -146,9 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <span class="simbolo <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">+</span>
                         </div>
-                        <div class="checked__container" id="check-box-<?php echo $index; ?>">
-                            <button  index="<?php echo $index; ?>" class="btn btn-primary" type="button" id="resolv-btn-<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))">Resolver</button>
-                        </div>
+
                     </form>
             <?php endforeach; ?>
         </div>
