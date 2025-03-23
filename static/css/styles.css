@@ -119,6 +119,7 @@ h1{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .digitos__container{
@@ -142,13 +143,6 @@ h1{
     margin-top: 20px !important;
 }
 
-.utl_digitos-resuelto{
-    border-top: 5px solid #458249;
-}
-
-.resuelto span{
-    color: #458249;
-}
 
 .flex-suma__container{
     display: flex;
@@ -163,29 +157,44 @@ h1{
     font-weight: 500;
 }
 
-.sumas-resueltas{
-    gap: 50px;
+.resuelta{
+    color: #458249;
 }
 
-.simbolo-resuelto{
-    width: max-content;
-    font-size: 5rem;
-    font-weight: 500;
+.buttons__container{
+    display: none;
 }
 
-.del-btn__container{
+.checked__container{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    margin-top: 30px;
+    width: 300px;
+    margin-left: 25px;
 }
 
-.del-btn__container a button{
-    width: 200px;
-    height: 100px;
-    font-size: 1.4rem;
-    box-shadow: 0px 0px 8px 2px #000;
+.display-sum__container{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0px !important;
+    width: 100% !important;
+    margin: auto !important;
+}
+
+.display-font{
+    font-size: 10rem;
+}
+
+.btn-volver{
+    width: 100%;
+}
+
+.volver__container{
+    display: none;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
 }
 
 /* RESPONSIVE */
@@ -194,6 +203,11 @@ h1{
     .grid__container{
         grid-template-columns: repeat(1, max-content);
         grid-template-rows: repeat(autofill, max-content);
+    }
+
+    .checked__container{
+        margin-left: 0px;
+        margin-right: 40px;
     }
 }
 

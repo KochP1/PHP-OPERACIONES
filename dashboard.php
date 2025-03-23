@@ -44,11 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'respuesta' => $respuestaCorrecta
             ];
 
-            $_SESSION['sumas'][$indice] = [
-                'matriz1' => randomNums(),
-                'matriz2' => randomNums(),
-                'resuelta' => false
-            ];
+            //Marcar la suma como resuelta
+            $_SESSION['sumas'][$indice]['resuelta'] = true;
 
             $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta! Se ha generado una nueva suma.'];
         } else {
@@ -112,18 +109,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="title__container">
             <h1>Sumas propuestas</h1>
         </div>
-        <div class="grid__container">
+        <div class="grid__container" id="grid-container">
             <?php foreach ($_SESSION['sumas'] as $index => $suma): ?>
-                <?php if (!$suma['resuelta']): ?>
                     <form action="" method="post" class="suma-form">
                         <input type="hidden" name="indice" value="<?php echo $index; ?>">
-                        <div class="flex-suma__container">
+                        <div class="flex-suma__container" id="<?php echo $index; ?>">
                         <div class="suma_container">
                             <!-- Mostrar la primera matriz -->
                             <?php foreach ($suma['matriz1'] as $fila): ?>
                                 <div class="digitos__container">
                                     <?php foreach ($fila as $valor): ?>
-                                        <span class="digito"><?php echo $valor; ?></span>
+                                        <span class="digito <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
                                     <?php endforeach; ?>
                                 </div>
                             <?php endforeach; ?>
@@ -132,26 +128,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php foreach ($suma['matriz2'] as $fila): ?>
                                 <div class="digitos__container utl_digitos">
                                     <?php foreach ($fila as $valor): ?>
-                                        <span class="digito digito_3"><?php echo $valor; ?></span>
+                                        <span class="digito digito_3 <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
                                     <?php endforeach; ?>
                                 </div>
                             <?php endforeach; ?>
 
                             <!-- Campo de entrada para la respuesta -->
-                            <div class="buttons__container">
+                            <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
                                 <input type="number" name="respuesta" required>
-                                <input type="submit" value="Enviar">
+                                <input type="submit" value="Enviar" class="btn btn-primary">
+                            </div>
+
+                            <div class="volver__container" id="volver-container-<?php echo $index; ?>">
+                                <button class="btn btn-primary btn-volver" type="button" id="btn-volver" onclick="reload_window() ">Volver</button>
                             </div>
                         </div>
 
-                        <span class="simbolo">+</span>
+                        <span class="simbolo <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">+</span>
+                        </div>
+                        <div class="checked__container" id="check-box-<?php echo $index; ?>">
+                            <button  index="<?php echo $index; ?>" class="btn btn-primary" type="button" id="resolv-btn-<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))">Resolver</button>
                         </div>
                     </form>
-                <?php endif; ?>
             <?php endforeach; ?>
         </div>
     </section>
 
     <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/script.js"></script>
 </body>
 </html>
