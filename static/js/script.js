@@ -23,6 +23,7 @@ function deploySuma(index) {
     gridContainer.classList.add('display-sum__container')
     sumaContainer.style.display = 'flex';
     sumaContainer.style.marginLeft = '70px';
+    sumaContainer.classList.add('suma-border__container');
 
     volver.style.display = 'flex';
 
