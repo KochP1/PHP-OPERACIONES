@@ -169,6 +169,7 @@ h1{
 
 .buttons__container{
     display: none;
+    gap: 10px;
 }
 
 .checked__container{
@@ -201,6 +202,10 @@ h1{
     justify-content: center;
     width: 100%;
     margin-top: 20px;
+}
+
+.input-respuesta{
+    width: 100px;
 }
 
 /* RESPONSIVE */

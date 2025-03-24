@@ -29,6 +29,14 @@ if (!isset($_SESSION['sumas_resueltas'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $indice = $_POST['indice'];
     $respuestaUsuario = $_POST['respuesta'];
+    $respuestaUsuario_2 = $_POST['respuesta_2'];
+    $respuestaUsuario_3 = $_POST['respuesta_3'];
+
+    $respuesta_1 = (string) ($respuestaUsuario);
+    $respuesta_2 = (string) ($respuestaUsuario_2);
+    $respuesta_3 = (string) ($respuestaUsuario_3);
+    $respuestaCompleta =$respuesta_1 . $respuesta_2 . $respuesta_3;
+    $respuestaFinal = (int) $respuestaCompleta;
 
     if (isset($_SESSION['sumas'][$indice])) {
         $suma = $_SESSION['sumas'][$indice];
@@ -37,19 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $respuestaCorrecta = $digito_1 + $digito_2;
 
-        if ($respuestaUsuario == $respuestaCorrecta) {
+        if ($respuestaFinal == $respuestaCorrecta) {
             $_SESSION['sumas_resueltas'][] = [
                 'matriz1' => $suma['matriz1'],
                 'matriz2' => $suma['matriz2'],
                 'respuesta' => $respuestaCorrecta
             ];
-
             //Marcar la suma como resuelta
             $_SESSION['sumas'][$indice]['resuelta'] = true;
 
-            $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta! Se ha generado una nueva suma.'];
+            $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta!'];
+            header('Location: dashboard.php');
         } else {
-            $_SESSION['mensaje'] = ['tipo' => 'alert-danger', 'texto' => 'Respuesta incorrecta. Inténtalo de nuevo.'];
+            $_SESSION['mensaje'] = ['tipo' => 'alert-danger', 'texto' => "Respuesta incorrecta. Inténtalo de nuevo."];
         }
     }
 }
@@ -80,16 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                       <li class="nav-item">
+                        <a class="nav-link">¡Hola, <?php echo $_SESSION['username']; ?>!</a>
+                      </li>
+                      <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="dashboard.php"">Inicio</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="historial.php">Historial</a>
-                      </li>
-                      <li class="nav-item">
                         <a class="nav-link" href="closeSession.php">Cerrar sesión</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link">¡Hola, <?php echo $_SESSION['username']; ?>!</a>
                       </li>
                     </ul>
                   </div>
@@ -135,12 +140,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <!-- Campo de entrada para la respuesta -->
                             <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
-                                <input type="number" name="respuesta" required>
+                                <input type="number" name="respuesta" required onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
+                                <input type="number" name="respuesta_2" required onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
+                                <input type="number" name="respuesta_3" required onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
                                 <input type="submit" value="Enviar" class="btn btn-primary">
                             </div>
 
                             <div class="volver__container" id="volver-container-<?php echo $index; ?>">
-                                <button class="btn btn-primary btn-volver" type="button" id="btn-volver" onclick="reload_window() ">Volver</button>
+                                <button class="btn btn-primary btn-volver" type="button" id="btn-volver" onclick="volver() ">Volver</button>
                             </div>
                         </div>
 

@@ -28,9 +28,9 @@ function deploySuma(index) {
     volver.style.display = 'flex';
 
     inputsContainer.style.display = 'flex';
+    
 }
 
-function reload_window() {
+function volver() {
     window.location.reload();
 }
-
