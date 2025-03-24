@@ -116,45 +116,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="grid__container" id="grid-container">
             <?php foreach ($_SESSION['sumas'] as $index => $suma): ?>
-                    <form action="" method="post" class="suma-form <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))" id="sum-form-<?php echo $index; ?>">
-                        <input type="hidden" name="indice" value="<?php echo $index; ?>">
-                        <div class="flex-suma__container" id="<?php echo $index; ?>">
-                        <div class="suma_container">
-                            <!-- Mostrar la primera matriz -->
-                            <?php foreach ($suma['matriz1'] as $fila): ?>
-                                <div class="digitos__container">
-                                    <?php foreach ($fila as $valor): ?>
-                                        <span class="digito <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <!-- Mostrar la segunda matriz -->
-                            <?php foreach ($suma['matriz2'] as $fila): ?>
-                                <div class="digitos__container utl_digitos <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">
-                                    <?php foreach ($fila as $valor): ?>
-                                        <span class="digito digito_3 <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <!-- Campo de entrada para la respuesta -->
-                            <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
-                                <input type="number" name="respuesta" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
-                                <input type="number" name="respuesta_2" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
-                                <input type="number" name="respuesta_3" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
-                                <input type="submit" value="Enviar" class="btn btn-primary">
+            <div class="wrapper">
+                <div class="volver__container" id="volver-container-<?php echo $index; ?>">
+                    <button class="btn btn-danger btn-volver" type="button" id="btn-volver-<?php echo $index; ?>" onclick="volver() ">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                </div>
+                <form action="" method="post" class="suma-form <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))" id="sum-form-<?php echo $index; ?>">
+                    <input type="hidden" name="indice" value="<?php echo $index; ?>">
+                    <div class="flex-suma__container" id="<?php echo $index; ?>">
+                    <div class="suma_container">
+                        <!-- Mostrar la primera matriz -->
+                        <?php foreach ($suma['matriz1'] as $fila): ?>
+                            <div class="digitos__container">
+                                <?php foreach ($fila as $valor): ?>
+                                    <span class="digito <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
+                                <?php endforeach; ?>
                             </div>
+                        <?php endforeach; ?>
 
-                            <div class="volver__container" id="volver-container-<?php echo $index; ?>">
-                                <button class="btn btn-danger btn-volver" type="button" id="btn-volver" onclick="volver() ">Volver</button>
+                        <!-- Mostrar la segunda matriz -->
+                        <?php foreach ($suma['matriz2'] as $fila): ?>
+                            <div class="digitos__container utl_digitos <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">
+                                <?php foreach ($fila as $valor): ?>
+                                    <span class="digito digito_3 <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
+                                <?php endforeach; ?>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
 
-                        <span class="simbolo <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">+</span>
+                        <!-- Campo de entrada para la respuesta -->
+                        <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
+                            <input type="number" name="respuesta" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
+                            <input type="number" name="respuesta_2" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
+                            <input type="number" name="respuesta_3" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
                         </div>
+                        <div class="volver__container" id="send-container-<?php echo $index; ?>">
+                            <button class="btn btn-primary btn-enviar" type="submit" id="btn-enviar-<?php echo $index; ?>">
+                                Enviar
+                            </button>
+                        </div>        
+                    </div>
+                    <span class="simbolo <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">+</span>
+                    </div>
 
-                    </form>
+                </form>
+            </div>
             <?php endforeach; ?>
         </div>
     </section>

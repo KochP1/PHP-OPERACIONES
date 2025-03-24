@@ -119,7 +119,7 @@ h1{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 50vw;
 }
 
 .digitos__container{
@@ -195,7 +195,11 @@ h1{
 }
 
 .btn-volver{
-    width: 100%;
+    width: max-content;
+    height: max-content;
+    border-color: transparent !important;
+    margin-left: 400px;
+    display: block;
 }
 
 .volver__container{
@@ -214,6 +218,10 @@ h1{
 
 .span__footer{
     color: transparent;
+}
+
+.btn-enviar{
+    width: 320px;
 }
 
 /* RESPONSIVE */
@@ -235,29 +243,8 @@ h1{
         font-size: 2.7rem !important;
     }
 
-    .flex-suma__container{
-        width: 80%;
-    }
 
-    .suma-form {
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-    }
-
-    .display-font{
-        font-size: 7rem;
-    }
-
-    .input-respuesta{
-        width: 70px;
-        height: 60px;
-        font-size: 2rem;
-        text-align: center;
-    }
-
-    .simbolo{
-        font-size: 3rem;
-        margin-right: 25px;
+    .btn-volver{
+        margin-right: 100px;
     }
 }
