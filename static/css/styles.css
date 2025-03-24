@@ -207,6 +207,9 @@ h1{
 
 .input-respuesta{
     width: 100px;
+    height: 60px;
+    font-size: 2.5rem;
+    text-align: center;
 }
 
 .span__footer{
@@ -230,5 +233,31 @@ h1{
 @media (max-width: 524px) {
     h1{
         font-size: 2.7rem !important;
+    }
+
+    .flex-suma__container{
+        width: 80%;
+    }
+
+    .suma-form {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .display-font{
+        font-size: 7rem;
+    }
+
+    .input-respuesta{
+        width: 70px;
+        height: 60px;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .simbolo{
+        font-size: 3rem;
+        margin-right: 25px;
     }
 }
