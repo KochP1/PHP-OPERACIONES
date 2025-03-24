@@ -165,6 +165,7 @@ h1{
 
 .resuelta{
     color: #458249;
+    border-color: #458249 !important;
 }
 
 .buttons__container{
@@ -206,6 +207,10 @@ h1{
 
 .input-respuesta{
     width: 100px;
+}
+
+.span__footer{
+    color: transparent;
 }
 
 /* RESPONSIVE */
