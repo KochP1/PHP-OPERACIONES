@@ -56,12 +56,12 @@ session_start();
 
             <div class="input__container">
                 <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" value="<?php echo $_SESSION['nombre']; ?>">
+                <input type="text" id="name" name="nombre" value="<?php echo $_SESSION['nombre']; ?>">
             </div>
 
             <div class="input__container">
                 <label for="lastname">Apellido</label>
-                <input type="text" id="lastname" name="lastname" value="<?php echo $_SESSION['apellido']; ?>">
+                <input type="text" id="lastname" name="apellido" value="<?php echo $_SESSION['apellido']; ?>">
             </div>
 
             <div class="input__container">
@@ -71,17 +71,49 @@ session_start();
 
             <div class="input__container">
                 <label for="password">Contraseña actual</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="old-password">
             </div>
 
             <div class="input__container">
                 <label for="password">Contraseña nueva</label>
                 <input type="password" id="password" name="password">
             </div>
-
+            <input type="hidden" id="idusuario" name="id" value="<?php echo $_SESSION['id']; ?>">
             <button type="submit" class="btn btn-primary login-btn" name="editar">Editar</button>
         </form>
     </div>
     <script src="static/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<?php
+if (isset($_POST['editar'])) {
+    session_start();
+    $id = mysqli_real_escape_string($enlace, $_POST['id']);
+    $nombre = mysqli_real_escape_string($enlace, $_POST['nombre']);
+    $apellido = mysqli_real_escape_string($enlace, $_POST['apellido']);
+    $username = mysqli_real_escape_string($enlace, $_POST['username']);
+    $oldPassword = mysqli_real_escape_string($enlace, $_POST['old-password']);
+    $password = mysqli_real_escape_string($enlace, $_POST['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    if ($username === "" or $password === "") {
+        echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios</div>';
+    } else if (strlen($username) > 12 or strlen($password) > 12) {
+        echo '<div class="alert alert-danger regist-exception">Usuario o contraseña(max 12 caracteres) muy largo</div>';
+    }else {
+        $sql = ("UPDATE usuarios SET nombre = '$nombre', apellido = '$apellido', username = '$username', contraseña = '$hashed_password' WHERE idusuarios = '$id'");
+        $execute = mysqli_query($enlace, $sql);
+
+        if ($execute) {
+
+          unset($_SESSION['sumas']);
+          session_destroy();
+          header('Location: index.php');
+          
+        } else {
+          echo '<div class="alert alert-danger regist-exception">Error</div>';
+        }
+    }
+}
+?>

@@ -53,6 +53,7 @@ if (isset($_POST['iniciar'])) {
             $usuario = mysqli_fetch_assoc($sql);
             if (password_verify($password, $usuario['contraseña'])) {
                 header('Location: dashboard.php');
+                $_SESSION['id'] = $usuario['idusuarios'];
                 $_SESSION['nombre'] = $usuario['nombre'];
                 $_SESSION['apellido'] = $usuario['apellido'];
                 $_SESSION['username'] = $usuario['username'];
