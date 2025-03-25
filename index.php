@@ -2,6 +2,10 @@
 include 'conn.php';
 ?>
 
+<script type="text/javascript">
+    localStorage.clear();
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

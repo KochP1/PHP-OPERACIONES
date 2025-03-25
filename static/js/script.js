@@ -19,7 +19,9 @@ function deploySuma(index, fromStorage = false) {
         let nums = document.querySelectorAll('.digito');
         const volver = document.getElementById(`volver-container-${index}`);
         const btnEnviar = document.getElementById(`send-container-${index}`);
-        const inputsContainer = document.getElementById(`btns-container-${index}`)
+        const inputsContainer = document.getElementById(`btns-container-${index}`);
+        const inicio = document.getElementById('inicio');
+        const logo = document.getElementById('logo');
     
         for (let i = 0; i < nums.length; i++) {
             nums[i].classList.add('display-font')
@@ -41,6 +43,10 @@ function deploySuma(index, fromStorage = false) {
         volver.style.display = 'flex';
         btnEnviar.style.display = 'flex';
         inputsContainer.style.display = 'flex';
+        inicio.removeAttribute('href');
+        inicio.style.cursor = 'pointer';
+        logo.removeAttribute('href');
+        logo.style.cursor = 'pointer';
         
         // Solo almacenar si no viene del localStorage
         if (!fromStorage) {
@@ -59,6 +65,8 @@ function volver() {
         const volver = document.getElementById(`volver-container-${activeSumIndex}`);
         const btnEnviar = document.getElementById(`send-container-${activeSumIndex}`);
         const inputsContainer = document.getElementById(`btns-container-${activeSumIndex}`);
+        const inicio = document.getElementById('inicio');
+        const logo = document.getElementById('logo');
         
         for (let i = 0; i < nums.length; i++) {
             nums[i].classList.remove('display-font');
@@ -76,8 +84,11 @@ function volver() {
         volver.style.display = 'none';
         btnEnviar.style.display = 'none';
         inputsContainer.style.display = 'none';
-        
-        // Eliminar el índice del localStorage
+        inicio.setAttribute('href', 'dashboard.php');
+        logo.setAttribute('href', 'dashboard.php');
+
         localStorage.removeItem('activeSumIndex');
     }
+
+    window.location.reload();
 }

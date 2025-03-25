@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <header class="header">
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="dashboard.php">
+                  <a class="navbar-brand" href="dashboard.php" id="logo">
                     <i class="fa-solid fa-plus"></i>
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a class="nav-link">¡Hola, <?php echo $_SESSION['username']; ?>!</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard.php"">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="dashboard.php" id="inicio">Inicio</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="cuenta.php" id="cuenta">Cuenta</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="closeSession.php">Cerrar sesión</a>
