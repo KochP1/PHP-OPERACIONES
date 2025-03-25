@@ -88,7 +88,7 @@ session_start();
 
 <?php
 if (isset($_POST['editar'])) {
-    session_start();
+    //session_start();
     $id = mysqli_real_escape_string($enlace, $_POST['id']);
     $nombre = mysqli_real_escape_string($enlace, $_POST['nombre']);
     $apellido = mysqli_real_escape_string($enlace, $_POST['apellido']);
@@ -97,23 +97,37 @@ if (isset($_POST['editar'])) {
     $password = mysqli_real_escape_string($enlace, $_POST['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($username === "" or $password === "") {
+    if ($username === "" or $password === "" or $oldPassword == "") {
         echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios</div>';
     } else if (strlen($username) > 12 or strlen($password) > 12) {
         echo '<div class="alert alert-danger regist-exception">Usuario o contraseña(max 12 caracteres) muy largo</div>';
+    } else if (strlen($nombre) > 15) {
+      echo '<div class="alert alert-danger regist-exception">Nombre (max 15 caracteres) muy largo</div>';
+    } else if (strlen($apellido) > 15) {
+      echo '<div class="alert alert-danger regist-exception">Apellido (max 20 caracteres) muy largo</div>';
     }else {
-        $sql = ("UPDATE usuarios SET nombre = '$nombre', apellido = '$apellido', username = '$username', contraseña = '$hashed_password' WHERE idusuarios = '$id'");
-        $execute = mysqli_query($enlace, $sql);
+      $sql = mysqli_query($enlace, "SELECT contraseña FROM usuarios WHERE idusuarios = '$id'");
 
-        if ($execute) {
+      if ($sql && mysqli_num_rows($sql) > 0) {
+        $usuario = mysqli_fetch_assoc($sql);
+        if (password_verify($oldPassword, $usuario['contraseña'])) {
+            $sql_edit = ("UPDATE usuarios SET nombre = '$nombre', apellido = '$apellido', username = '$username', contraseña = '$hashed_password' WHERE idusuarios = '$id'");
+            $execute = mysqli_query($enlace, $sql_edit);
+    
+            if ($execute) {
+    
+              unset($_SESSION['sumas']);
+              session_destroy();
+              header('Location: index.php');
+    
+            }else {
+              echo '<div class="alert alert-danger regist-exception">Error</div>';
+            }
 
-          unset($_SESSION['sumas']);
-          session_destroy();
-          header('Location: index.php');
-          
-        } else {
-          echo '<div class="alert alert-danger regist-exception">Error</div>';
+        }else {
+            echo '<div class="alert alert-danger regist-exception">La contraseña actual no es correcta</div>';
         }
     }
+}
 }
 ?>
