@@ -224,6 +224,17 @@ h1{
     width: 320px;
 }
 
+/* EDITAR CUENTA */
+
+.edit-form{
+    height: 650px;
+}
+
+.edit-form-wrapper{
+    margin-top: 7%;
+}
+
+
 /* RESPONSIVE */
 
 @media (max-width: 804px) {

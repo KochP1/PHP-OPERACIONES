@@ -51,7 +51,37 @@ session_start();
         </header>
     </section>
 
+    <div class="form-wrapper edit-form-wrapper">
+        <form action="" method="post" class="user-form regist-form edit-form">
 
+            <div class="input__container">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" value="<?php echo $_SESSION['nombre']; ?>">
+            </div>
+
+            <div class="input__container">
+                <label for="lastname">Apellido</label>
+                <input type="text" id="lastname" name="lastname" value="<?php echo $_SESSION['apellido']; ?>">
+            </div>
+
+            <div class="input__container">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" value="<?php echo $_SESSION['username']; ?>">
+            </div>
+
+            <div class="input__container">
+                <label for="password">Contraseña actual</label>
+                <input type="password" id="password" name="password">
+            </div>
+
+            <div class="input__container">
+                <label for="password">Contraseña nueva</label>
+                <input type="password" id="password" name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary login-btn" name="editar">Editar</button>
+        </form>
+    </div>
     <script src="static/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
