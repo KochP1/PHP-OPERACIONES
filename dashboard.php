@@ -36,13 +36,15 @@ if (!isset($_SESSION['sumas'])) {
             'resuelta' => true
         ];
     }
-    
+
+    $todasResueltas = 1;
+
     if (count($sumasResueltas) >= 8) {
         $stmt = $enlace->prepare("DELETE FROM sumas_resueltas WHERE idusuarios = ?");
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
-        
         $sumasResueltas = [];
+        $todasResueltas = 8;
     }
     
     // Generar nuevas sumas hasta completar 8
@@ -99,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -168,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <form action="" method="post" class="suma-form mobile-form <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))" id="sum-form-<?php echo $index; ?>">
                     <input type="hidden" name="indice" value="<?php echo $index; ?>">
-                    <div class="flex-suma__container <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" id="<?php echo $index; ?>">
+                    <div class="flex-suma__container <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" id="<?php echo $index; ?>" onclick="btnSound()">
                     <div class="suma_container">
                         <!-- Mostrar la primera matriz -->
                         <?php foreach ($suma['matriz1'] as $fila): ?>
@@ -195,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="hidden" name="respuesta_3" onkeydown="return false;" class="input-respuesta input-respuesta-3" min="0" max="9" step="1" id="respuesta-3-<?php echo $index; ?>">
                         </div>
                         <div class="volver__container" id="send-container-<?php echo $index; ?>">
-                            <button class="btn btn-primary btn-enviar" type="submit" id="btn-enviar-<?php echo $index; ?>">
+                            <button class="btn btn-primary btn-enviar" type="submit" id="btn-enviar-<?php echo $index; ?>" index="<?php echo $index; ?>" onclick="soundEffect(this.getAttribute('index'))">
                                 Enviar
                             </button>
                         </div>        
@@ -209,8 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
-    <span class="span__footer">12345</span>
-
+    <span class="span__footer">12345</span>    
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/script.js"></script>
 </body>
