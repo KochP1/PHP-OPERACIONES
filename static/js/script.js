@@ -22,7 +22,33 @@ function deploySuma(index, fromStorage = false) {
         const inputsContainer = document.getElementById(`btns-container-${index}`);
         const inicio = document.getElementById('inicio');
         const logo = document.getElementById('logo');
-    
+        const span1 = document.querySelectorAll(`.digito-1-${index}`);
+        const span2 = document.querySelectorAll(`.digito-2-${index}`);
+
+        const digito1Array = [];
+
+        for (let i = 0; i < span1.length; i++) {
+            digito1Array.push(span1[i].textContent);
+        }
+        const digito1 = digito1Array[0] + digito1Array[1];
+        const num1 = parseInt(digito1);
+
+        for (let i = 0; i < span2.length; i++) {
+            digito1Array.push(span2[i].textContent);
+        }
+
+        const digito2 = digito1Array[2] + digito1Array[3];
+        const num2 = parseInt(digito2);
+
+        const sumaResult = num1 + num2;
+        const cantidadDigitos = String(sumaResult).length;
+
+        if (cantidadDigitos === 3) {
+            console.log(document.getElementById(`respuesta-3-${index}`));
+            document.getElementById(`respuesta-3-${index}`).type = 'number';
+            console.log(`El resultado tiene ${cantidadDigitos} digitos`);
+        }
+
         for (let i = 0; i < nums.length; i++) {
             nums[i].classList.add('display-font')
         }
@@ -47,6 +73,7 @@ function deploySuma(index, fromStorage = false) {
         inicio.style.cursor = 'pointer';
         logo.removeAttribute('href');
         logo.style.cursor = 'pointer';
+        formSuma.style.marginTop = '150px';
         
         // Solo almacenar si no viene del localStorage
         if (!fromStorage) {
@@ -67,6 +94,7 @@ function volver() {
         const inputsContainer = document.getElementById(`btns-container-${activeSumIndex}`);
         const inicio = document.getElementById('inicio');
         const logo = document.getElementById('logo');
+        const formSuma = document.getElementById(`sum-form-${activeSumIndex}`);
         
         for (let i = 0; i < nums.length; i++) {
             nums[i].classList.remove('display-font');
@@ -86,6 +114,7 @@ function volver() {
         inputsContainer.style.display = 'none';
         inicio.setAttribute('href', 'dashboard.php');
         logo.setAttribute('href', 'dashboard.php');
+        formSuma.style.marginTop = '0px';
 
         localStorage.removeItem('activeSumIndex');
     }

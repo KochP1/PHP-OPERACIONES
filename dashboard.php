@@ -71,6 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="static/css/styles.css">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Operaciones</title>
 </head>
@@ -133,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php foreach ($suma['matriz1'] as $fila): ?>
                             <div class="digitos__container">
                                 <?php foreach ($fila as $valor): ?>
-                                    <span class="digito <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
+                                    <span class="digito <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?> digito-1-<?php echo $index; ?>"><?php echo $valor; ?></span>
                                 <?php endforeach; ?>
                             </div>
                         <?php endforeach; ?>
@@ -142,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php foreach ($suma['matriz2'] as $fila): ?>
                             <div class="digitos__container utl_digitos <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>">
                                 <?php foreach ($fila as $valor): ?>
-                                    <span class="digito digito_3 <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>"><?php echo $valor; ?></span>
+                                    <span class="digito digito_3 <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?> digito-2-<?php echo $index; ?>"><?php echo $valor; ?></span>
                                 <?php endforeach; ?>
                             </div>
                         <?php endforeach; ?>
@@ -151,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
                             <input type="number" name="respuesta" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
                             <input type="number" name="respuesta_2" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
-                            <input type="number" name="respuesta_3" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
+                            <input type="hidden" name="respuesta_3" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1" id="respuesta-3-<?php echo $index; ?>">
                         </div>
                         <div class="volver__container" id="send-container-<?php echo $index; ?>">
                             <button class="btn btn-primary btn-enviar" type="submit" id="btn-enviar-<?php echo $index; ?>">

@@ -30,7 +30,6 @@ include 'conn.php';
 
             <button type="submit" class="btn btn-primary login-btn" name="iniciar">Inciar sesión</button>
             <a href="regist.php">¿No tienes una cuenta?</a>
-            <a href="forgot.php">¿Olvidaste tu contraseña?</a>
         </form>
     </div>
 
