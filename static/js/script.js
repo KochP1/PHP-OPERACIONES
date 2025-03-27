@@ -1,5 +1,3 @@
-
-
 const audioBtns = new Audio();
 audioBtns.src = "static/audio/switch-button-106349.mp3";
 const audioError = new Audio();
