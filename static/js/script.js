@@ -63,6 +63,7 @@ function deploySuma(index, fromStorage = false) {
     
         for (let i = 0; i < otrasSumas.length; i++) {
             otrasSumas[i].style.display = 'none';
+            otrasSumas[i].onclick = null;
         }
     
         for (let i = 0; i < checkContainers.length; i++) {
@@ -113,6 +114,7 @@ function volver() {
         
         for (let i = 0; i < otrasSumas.length; i++) {
             otrasSumas[i].style.display = 'flex';
+            otrasSumas[i].onclick = btnSound;
         }
         
         gridContainer.classList.remove('display-sum__container');
@@ -178,7 +180,7 @@ function soundEffect(index) {
         audioCorrect.play();
         setTimeout(() => {
             form.submit();
-        }, "1000");          
+        }, "500");          
     }
 }
 
