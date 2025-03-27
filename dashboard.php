@@ -158,6 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <section class="sumas-section">
+        <div class="message__container" id="win-msg">
+            <h2>¡Felicidades!, completaste todas las sumas</h2>
+        </div>
         <div class="title__container">
             <h1>Sumas propuestas</h1>
         </div>

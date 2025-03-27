@@ -199,3 +199,12 @@ function handleScreenChange(e) {
 // Ejecutar al cambio y al cargar
 mediaQuery.addListener(handleScreenChange);
 handleScreenChange(mediaQuery);
+
+const sumasResueltas = document.querySelectorAll('.flex-suma__container.resuelta');
+console.log(sumasResueltas.length);
+
+if (sumasResueltas.length === 8) {
+    
+    const victoryMessage = document.getElementById('win-msg')
+    victoryMessage.style.display = 'flex';
+}
