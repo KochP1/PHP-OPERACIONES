@@ -24,6 +24,7 @@ function deploySuma(index, fromStorage = false) {
         const logo = document.getElementById('logo');
         const span1 = document.querySelectorAll(`.digito-1-${index}`);
         const span2 = document.querySelectorAll(`.digito-2-${index}`);
+        const body = document.getElementById('d-body');
 
         const digito1Array = [];
 
@@ -74,6 +75,7 @@ function deploySuma(index, fromStorage = false) {
         logo.removeAttribute('href');
         logo.style.cursor = 'pointer';
         formSuma.style.marginTop = '150px';
+        body.style.backgroundColor = '#fff';
         
         // Solo almacenar si no viene del localStorage
         if (!fromStorage) {
@@ -95,6 +97,7 @@ function volver() {
         const inicio = document.getElementById('inicio');
         const logo = document.getElementById('logo');
         const formSuma = document.getElementById(`sum-form-${activeSumIndex}`);
+        const body = document.getElementById('d-body');
         
         for (let i = 0; i < nums.length; i++) {
             nums[i].classList.remove('display-font');
@@ -115,9 +118,30 @@ function volver() {
         inicio.setAttribute('href', 'dashboard.php');
         logo.setAttribute('href', 'dashboard.php');
         formSuma.style.marginTop = '0px';
+        body.style.backgroundColor = '#faffe0';
 
         localStorage.removeItem('activeSumIndex');
     }
 
     window.location.reload();
 }
+
+function toggleKeyboardInputs() {
+    const inputs = document.querySelectorAll('input[type="number"][onkeydown="return false"]');
+    const screenWidth = window.innerWidth;
+
+    inputs.forEach(input => {
+        if (screenWidth <= 810) {
+            // Permitir entrada por teclado (elimina onkeydown)
+            input.onkeydown = null;
+            input.removeAttribute('onkeydown');
+        } else {
+            // Bloquear entrada por teclado (restaura onkeydown)
+            input.onkeydown = () => false;
+        }
+    });
+}
+
+// Ejecutar al cargar y al cambiar el tamaño de la pantalla
+window.addEventListener('load', toggleKeyboardInputs);
+window.addEventListener('resize', toggleKeyboardInputs);

@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Operaciones</title>
 </head>
-<body>
+<body class="dashboard-body" id="d-body">
     <section class="header__section">
         <header class="header">
             <nav class="navbar navbar-expand-lg">
@@ -126,12 +126,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="wrapper">
                 <div class="volver__container" id="volver-container-<?php echo $index; ?>">
                     <button class="btn btn-danger btn-volver" type="button" id="btn-volver-<?php echo $index; ?>" onclick="volver() ">
-                        <i class="fa-solid fa-x"></i>
+                        SALIR
                     </button>
                 </div>
-                <form action="" method="post" class="suma-form <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))" id="sum-form-<?php echo $index; ?>">
+                <form action="" method="post" class="suma-form mobile-form <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" index="<?php echo $index; ?>" onclick="deploySuma(this.getAttribute('index'))" id="sum-form-<?php echo $index; ?>">
                     <input type="hidden" name="indice" value="<?php echo $index; ?>">
-                    <div class="flex-suma__container" id="<?php echo $index; ?>">
+                    <div class="flex-suma__container <?php echo $suma['resuelta'] ? 'resuelta' : ''; ?>" id="<?php echo $index; ?>">
                     <div class="suma_container">
                         <!-- Mostrar la primera matriz -->
                         <?php foreach ($suma['matriz1'] as $fila): ?>
