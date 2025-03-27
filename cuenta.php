@@ -97,8 +97,8 @@ if (isset($_POST['editar'])) {
     $password = mysqli_real_escape_string($enlace, $_POST['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($username === "" or $password === "" or $oldPassword == "") {
-        echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios</div>';
+    if ($username === "" or $apellido === "" or $nombre === "") {
+        echo '<div class="alert alert-danger regist-exception">Todos los campos son obligatorios excepto la contraseña</div>';
     } else if (strlen($username) > 12 or strlen($password) > 12) {
         echo '<div class="alert alert-danger regist-exception">Usuario o contraseña(max 12 caracteres) muy largo</div>';
     } else if (strlen($nombre) > 15) {
@@ -110,7 +110,7 @@ if (isset($_POST['editar'])) {
 
       if ($sql && mysqli_num_rows($sql) > 0) {
         $usuario = mysqli_fetch_assoc($sql);
-        if (password_verify($oldPassword, $usuario['contraseña'])) {
+        if (password_verify($oldPassword, $usuario['contraseña']) && $password !== "" && $oldPassword !== "") {
             $sql_edit = ("UPDATE usuarios SET nombre = '$nombre', apellido = '$apellido', username = '$username', contraseña = '$hashed_password' WHERE idusuarios = '$id'");
             $execute = mysqli_query($enlace, $sql_edit);
     
@@ -124,6 +124,19 @@ if (isset($_POST['editar'])) {
               echo '<div class="alert alert-danger regist-exception">Error</div>';
             }
 
+        } else if ($password === "" && $oldPassword === "") {
+            $sql_edit = ("UPDATE usuarios SET nombre = '$nombre', apellido = '$apellido', username = '$username'WHERE idusuarios = '$id'");
+            $execute = mysqli_query($enlace, $sql_edit);
+    
+            if ($execute) {
+    
+              unset($_SESSION['sumas']);
+              session_destroy();
+              header('Location: index.php');
+    
+            }else {
+              echo '<div class="alert alert-danger regist-exception">Error</div>';
+            }
         }else {
             echo '<div class="alert alert-danger regist-exception">La contraseña actual no es correcta</div>';
         }
