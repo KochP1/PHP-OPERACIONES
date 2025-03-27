@@ -130,7 +130,12 @@ const mediaQuery = window.matchMedia('(max-width: 810px)');
 
 function handleScreenChange(e) {
     const inputs = document.querySelectorAll('input[type="number"]');
+    const inputHidden = document.querySelectorAll('.input-respuesta-3')
     inputs.forEach(input => {
+        input.onkeydown = e.matches ? null : () => false;
+    });
+
+    inputHidden.forEach(input => {
         input.onkeydown = e.matches ? null : () => false;
     });
 }

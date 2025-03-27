@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="buttons__container" id="btns-container-<?php echo $index; ?>">
                             <input type="number" name="respuesta" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
                             <input type="number" name="respuesta_2" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1">
-                            <input type="hidden" name="respuesta_3" onkeydown="return false;" class="input-respuesta" min="0" max="9" step="1" id="respuesta-3-<?php echo $index; ?>">
+                            <input type="hidden" name="respuesta_3" onkeydown="return false;" class="input-respuesta input-respuesta-3" min="0" max="9" step="1" id="respuesta-3-<?php echo $index; ?>">
                         </div>
                         <div class="volver__container" id="send-container-<?php echo $index; ?>">
                             <button class="btn btn-primary btn-enviar" type="submit" id="btn-enviar-<?php echo $index; ?>">
