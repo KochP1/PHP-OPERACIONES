@@ -36,13 +36,15 @@ if (!isset($_SESSION['sumas'])) {
             'resuelta' => true
         ];
     }
-    
+
+    $todasResueltas = 1;
+
     if (count($sumasResueltas) >= 8) {
         $stmt = $enlace->prepare("DELETE FROM sumas_resueltas WHERE idusuarios = ?");
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
-        
         $sumasResueltas = [];
+        $todasResueltas = 8;
     }
     
     // Generar nuevas sumas hasta completar 8
@@ -210,8 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
-    <span class="span__footer">12345</span>
-
+    <span class="span__footer">12345</span>    
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/js/script.js"></script>
 </body>
