@@ -1,3 +1,12 @@
+
+
+const audioBtns = new Audio();
+audioBtns.src = "static/audio/switch-button-106349.mp3";
+const audioError = new Audio();
+audioError.src = "static/audio/wrong-47985.mp3"
+const audioCorrect = new Audio();
+audioCorrect.src = "static/audio/8-bit-victory-sound-101319.mp3";
+
 // Función que se ejecuta al cargar la página para verificar el estado guardado
 window.addEventListener('DOMContentLoaded', (event) => {
     const activeSumIndex = localStorage.getItem('activeSumIndex');
@@ -45,9 +54,7 @@ function deploySuma(index, fromStorage = false) {
         const cantidadDigitos = String(sumaResult).length;
 
         if (cantidadDigitos === 3) {
-            console.log(document.getElementById(`respuesta-3-${index}`));
             document.getElementById(`respuesta-3-${index}`).type = 'number';
-            console.log(`El resultado tiene ${cantidadDigitos} digitos`);
         }
 
         for (let i = 0; i < nums.length; i++) {
@@ -87,6 +94,7 @@ function deploySuma(index, fromStorage = false) {
 function volver() {
     const activeSumIndex = localStorage.getItem('activeSumIndex');
     if (activeSumIndex) {
+        //audioBtns.play();
         const sumaContainer = document.getElementById(`${activeSumIndex}`);
         const otrasSumas = document.querySelectorAll('.flex-suma__container');
         const gridContainer = document.getElementById('grid-container');
@@ -123,7 +131,55 @@ function volver() {
         localStorage.removeItem('activeSumIndex');
     }
 
-    window.location.reload();
+    window.location.href = "dashboard.php";
+}
+
+function btnSound() {
+    audioBtns.play();
+}
+
+function soundEffect(index) {
+    // Prevenir el envío inmediato
+    event.preventDefault();
+        
+    // Primero reproducir sonido si es incorrecto
+    const form = document.getElementById(`sum-form-${index}`);
+    const inputs = form.querySelectorAll('input[type="number"]');
+    const span1 = document.querySelectorAll(`.digito-1-${index}`);
+    const span2 = document.querySelectorAll(`.digito-2-${index}`);
+
+    const digito1Array = [];
+
+    for (let i = 0; i < span1.length; i++) {
+        digito1Array.push(span1[i].textContent);
+    }
+    const digito1 = digito1Array[0] + digito1Array[1];
+    const num1 = parseInt(digito1);
+
+    for (let i = 0; i < span2.length; i++) {
+        digito1Array.push(span2[i].textContent);
+    }
+
+    const digito2 = digito1Array[2] + digito1Array[3];
+    const num2 = parseInt(digito2);
+
+    const sumaResult = num1 + num2;
+    let respuestaCompleta = ''
+    
+    inputs.forEach(input => {
+        respuestaCompleta += input.value || '0';
+    });
+
+    const resultadoUsuario = String(sumaResult);
+
+    if (respuestaCompleta !== resultadoUsuario) {
+        audioError.play();
+    } else {
+        audioCorrect.play();
+        setTimeout(() => {
+            form.submit();
+        }, "1000");          
+    }
 }
 
 const mediaQuery = window.matchMedia('(max-width: 810px)');
