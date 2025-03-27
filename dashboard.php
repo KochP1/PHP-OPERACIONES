@@ -91,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Marcar como resuelta en sesión
             $_SESSION['sumas'][$indice]['resuelta'] = true;
             
-            $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta!'];
             header('Location: dashboard.php');
             exit;
         } else {
