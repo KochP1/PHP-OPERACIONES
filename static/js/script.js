@@ -126,22 +126,15 @@ function volver() {
     window.location.reload();
 }
 
-function toggleKeyboardInputs() {
-    const inputs = document.querySelectorAll('input[type="number"][onkeydown="return false"]');
-    const screenWidth = window.innerWidth;
+const mediaQuery = window.matchMedia('(max-width: 810px)');
 
+function handleScreenChange(e) {
+    const inputs = document.querySelectorAll('input[type="number"]');
     inputs.forEach(input => {
-        if (screenWidth <= 810) {
-            // Permitir entrada por teclado (elimina onkeydown)
-            input.onkeydown = null;
-            input.removeAttribute('onkeydown');
-        } else {
-            // Bloquear entrada por teclado (restaura onkeydown)
-            input.onkeydown = () => false;
-        }
+        input.onkeydown = e.matches ? null : () => false;
     });
 }
 
-// Ejecutar al cargar y al cambiar el tamaño de la pantalla
-window.addEventListener('load', toggleKeyboardInputs);
-window.addEventListener('resize', toggleKeyboardInputs);
+// Ejecutar al cambio y al cargar
+mediaQuery.addListener(handleScreenChange);
+handleScreenChange(mediaQuery);
