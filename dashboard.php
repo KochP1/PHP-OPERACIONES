@@ -2,62 +2,100 @@
 include 'conn.php';
 session_start();
 
+// Obtener ID de usuario (asumo que está en la sesión)
+$usuario_id = $_SESSION['id'];
+
 function randomNums() {
     return [
         [rand(1, 9), rand(1, 9)]
     ];
 }
 
-// Inicializar las sumas aleatorias si no existen
+// Función para generar una suma aleatoria
+function generarSumaAleatoria() {
+    return [
+        'matriz1' => randomNums(),
+        'matriz2' => randomNums(),
+        'resuelta' => false
+    ];
+}
+
+// Inicializar o actualizar las sumas
 if (!isset($_SESSION['sumas'])) {
-    $_SESSION['sumas'] = [];
-    for ($i = 0; $i < 8; $i++) {
-        $_SESSION['sumas'][] = [
-            'matriz1' => randomNums(),
-            'matriz2' => randomNums(),
-            'resuelta' => false
+    // Obtener sumas resueltas de la base de datos
+    $sumasResueltas = [];
+    $stmt = $enlace->prepare("SELECT matriz1, matriz2 FROM sumas_resueltas WHERE idusuarios = ?");
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    while ($sumaResuelta = $result->fetch_assoc()) {
+        $sumasResueltas[] = [
+            'matriz1' => json_decode($sumaResuelta['matriz1']), 
+            'matriz2' => json_decode($sumaResuelta['matriz2']),
+            'resuelta' => true
         ];
     }
+    
+    if (count($sumasResueltas) >= 8) {
+        $stmt = $enlace->prepare("DELETE FROM sumas_resueltas WHERE idusuarios = ?");
+        $stmt->bind_param("i", $usuario_id);
+        $stmt->execute();
+        
+        $sumasResueltas = [];
+    }
+    
+    // Generar nuevas sumas hasta completar 8
+    $_SESSION['sumas'] = $sumasResueltas;
+    while (count($_SESSION['sumas']) < 8) {
+        $nuevaSuma = generarSumaAleatoria();
+        
+        // Verificar que no sea igual a una ya resuelta
+        $esUnica = true;
+        foreach ($sumasResueltas as $sumaResuelta) {
+            if ($sumaResuelta['matriz1'] == $nuevaSuma['matriz1'] && 
+                $sumaResuelta['matriz2'] == $nuevaSuma['matriz2']) {
+                $esUnica = false;
+                break;
+            }
+        }
+        
+        if ($esUnica) {
+            $_SESSION['sumas'][] = $nuevaSuma;
+        }
+    }
+    
+    //shuffle($_SESSION['sumas']);
 }
 
-// Inicializar el historial de sumas resueltas si no existe
-if (!isset($_SESSION['sumas_resueltas'])) {
-    $_SESSION['sumas_resueltas'] = [];
-}
-
-// Procesar la respuesta del usuario
+// Procesar respuesta del usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $indice = $_POST['indice'];
-    $respuestaUsuario = $_POST['respuesta'];
-    $respuestaUsuario_2 = $_POST['respuesta_2'];
-    $respuestaUsuario_3 = $_POST['respuesta_3'];
-
-    $respuesta_1 = (string) ($respuestaUsuario);
-    $respuesta_2 = (string) ($respuestaUsuario_2);
-    $respuesta_3 = (string) ($respuestaUsuario_3);
-    $respuestaCompleta =$respuesta_1 . $respuesta_2 . $respuesta_3;
-    $respuestaFinal = (int) $respuestaCompleta;
+    $respuestaFinal = (int)($_POST['respuesta'] . $_POST['respuesta_2'] . $_POST['respuesta_3']);
 
     if (isset($_SESSION['sumas'][$indice])) {
         $suma = $_SESSION['sumas'][$indice];
-        $digito_1 = (int) ($suma['matriz1'][0][0] . $suma['matriz1'][0][1]);
-        $digito_2 = (int) ($suma['matriz2'][0][0] . $suma['matriz2'][0][1]);
-        
-        $respuestaCorrecta = $digito_1 + $digito_2;
+        $digito1 = (int)($suma['matriz1'][0][0] . $suma['matriz1'][0][1]);
+        $digito2 = (int)($suma['matriz2'][0][0] . $suma['matriz2'][0][1]);
+        $respuestaCorrecta = $digito1 + $digito2;
 
-        if ($respuestaFinal == $respuestaCorrecta) {
-            $_SESSION['sumas_resueltas'][] = [
-                'matriz1' => $suma['matriz1'],
-                'matriz2' => $suma['matriz2'],
-                'respuesta' => $respuestaCorrecta
-            ];
-            //Marcar la suma como resuelta
+        if ($respuestaFinal == $respuestaCorrecta && !$suma['resuelta']) {
+            // Guardar en base de datos
+            $stmt = $enlace->prepare("INSERT INTO sumas_resueltas (idusuarios, matriz1, matriz2, respuesta) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("issi", $usuario_id, 
+                            json_encode($suma['matriz1']), 
+                            json_encode($suma['matriz2']), 
+                            $respuestaCorrecta);
+            $stmt->execute();
+            
+            // Marcar como resuelta en sesión
             $_SESSION['sumas'][$indice]['resuelta'] = true;
-
+            
             $_SESSION['mensaje'] = ['tipo' => 'alert-success', 'texto' => '¡Respuesta correcta!'];
             header('Location: dashboard.php');
+            exit;
         } else {
-            $_SESSION['mensaje'] = ['tipo' => 'alert-danger', 'texto' => "Respuesta incorrecta. Inténtalo de nuevo."];
+            $_SESSION['mensaje'] = ['tipo' => 'alert-danger', 'texto' => $suma['resuelta'] ? "Ya resolviste esta suma" : "Respuesta incorrecta"];
         }
     }
 }
